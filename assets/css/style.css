@@ -373,11 +373,13 @@ button {
 
 .product__price {
   grid-column: span 1;
+  color: red;
 }
 
 .product__stock {
   grid-column: span 2;
   justify-self: flex-end;
+  color: red;
 }
 
 .product__title {
@@ -444,6 +446,7 @@ button {
   grid-template-columns: 1fr;
   grid-template-rows: 10% 70% 20%;
   height: 100%;
+  color: red;
 }
 
 .cart__header {
@@ -518,6 +521,7 @@ button {
   align-items: center;
   justify-self: center;
   gap: var(--sp-1);
+  color: red;
 }
 
 .remove-from-cart {
@@ -545,6 +549,7 @@ button {
 .cart__total {
   grid-column: span 2;
   justify-self: end;
+  color: red;
 }
 
 .btn--buy {
@@ -600,4 +605,41 @@ button {
   .container {
     margin: 0 auto;
   }
+}
+
+.nav--scroll {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: navbarAnimation 0.3s;
+}
+
+@keyframes navbarAnimation {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .nav {
+  background-color: #222;
+}
+
+.dark-mode .nav__link {
+  color: #fff;
+}
+
+.btn--toggle {
+  color: red;
 }

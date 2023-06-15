@@ -14,10 +14,10 @@ function cart(db, printProducts) {
     
     let htmlCart = ''
 
-    if (cart.length === 0) {
+    if (cart.length === 0) { 
       htmlCart += `
       <div class="cart__empty">
-        <i class='bx bx-cart'></i>
+        <i class='bx bx-cart'></i> 
         <p class="cart__empty--text">No hay productos en el carrito</p>
       </div>
       `
@@ -58,17 +58,34 @@ function cart(db, printProducts) {
     totalDOM.innerHTML = showTotal()
   }
 
+  function updateBuyButton() {
+    const hasNegativeStock = cart.some(item => {
+      const product = db.find(p => p.id === item.id);
+      return product.quantity <= 0 || product.quantity - item.qty < 0;
+    });
+  
+    if (hasNegativeStock) {
+      checkoutDOM.disabled = true;
+    } else {
+      checkoutDOM.disabled = false;
+    }
+  }
+  
+  printCart();
+  updateBuyButton();
+
   function addToCart(id, qty = 1) {
 
     const itemFinded = cart.find(i => i.id === id)
-
+    
     if (itemFinded) {
 
       itemFinded.qty += qty
     } else {
       cart.push({id, qty})
     }
-    printCart()
+    printCart();
+    updateBuyButton();
   }
 
   function removeFromCart(id, qty = 1) {
@@ -83,12 +100,14 @@ function cart(db, printProducts) {
     }
 
     printCart()
+    updateBuyButton();
   }
 
   function deleteFromCart(id) {
     cart = cart.filter(i => i.id !== id)
 
     printCart()
+    updateBuyButton();
   }
 
   function showItemsCount() {
@@ -112,6 +131,10 @@ function cart(db, printProducts) {
     for (const item of cart) {
       const productFinded = db.find(p => p.id === item.id)
       productFinded.quantity -= item.qty
+    }
+    if (cart.length <= 0) {
+      window.alert('El carrito está vacío');
+      return;
     }
 
     cart = []
